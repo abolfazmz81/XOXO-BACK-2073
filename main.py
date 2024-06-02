@@ -64,3 +64,9 @@ async def update_score(json: List[input], db: Session = Depends(get_db)):
             db.commit()
             db.refresh(dt2)
     return "ok"
+
+
+@app.get("/top")
+async def Get_tops(db: Session = Depends(get_db)):
+    res = db.query(models.Scores).order_by(desc(models.Scores.score)).limit(10).all()
+    return res
